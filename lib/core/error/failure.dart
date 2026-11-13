@@ -1,29 +1,33 @@
 sealed class Failure implements Exception {
   final String message;
-  const Failure(this.message);
+
+  const Failure({required this.message});
 
   @override
   String toString() => message;
 }
 
 final class NetworkFailure extends Failure {
-  const NetworkFailure() : super('Please check your internet connection.');
+  const NetworkFailure()
+    : super(message: 'No internet! Please check your internet connection');
+}
+
+final class TimeoutFailure extends Failure {
+  const TimeoutFailure()
+    : super(message: 'The request took too long. Please try again.');
 }
 
 final class UnauthorizedFailure extends Failure {
   const UnauthorizedFailure()
-    : super('Your session is invalid. Please log in again.');
-}
-
-final class NotFoundFailure extends Failure {
-  const NotFoundFailure() : super('The requested item could not be found.');
+    : super(message: 'Your sesssion has expired. Please sign in again.');
 }
 
 final class ServerFailure extends Failure {
   const ServerFailure()
-    : super('The server encountered a problem. Try again later.');
+    : super(message: 'Server error. Please try again later.');
 }
 
 final class UnknownFailure extends Failure {
-  const UnknownFailure() : super('Something unexpected went wrong.');
+  const UnknownFailure()
+    : super(message: 'Something went wrong. Please try again.');
 }
